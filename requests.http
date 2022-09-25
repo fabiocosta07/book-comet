@@ -2,7 +2,7 @@
 GET http://localhost:8080/books
 Accept: application/json
 
-### Send POST request with json body
+### Send POST request with book1
 POST http://localhost:8080/books
 Content-Type: application/json
 
@@ -14,7 +14,7 @@ Content-Type: application/json
   "summary": "good book"
 }
 
-### Send POST request with json body
+### Send POST request with book2
 POST http://localhost:8080/books
 Content-Type: application/json
 
@@ -23,5 +23,20 @@ Content-Type: application/json
   "authors": "dostoievisk",
   "publisher": "trinta e tres",
   "yearOfPublication": 1800,
+  "summary": "Excelent book"
+}
+
+### DELETE request with a header
+DELETE http://localhost:8080/books/1
+
+### PUT request with a header
+PUT http://localhost:8080/books/2
+Content-Type: application/json
+
+{
+  "name": "crime and punishment updated",
+  "authors": "dostoievisk",
+  "publisher": "trinta e tres",
+  "yearOfPublication": 1899,
   "summary": "Excelent book"
 }
