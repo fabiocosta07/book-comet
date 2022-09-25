@@ -25,27 +25,27 @@ class BookController {
 
     // Aggregate root
     // tag::get-aggregate-root[]
-    @GetMapping("/Books")
+    @GetMapping("/books")
     List<Book> all() {
         return repository.findAll();
     }
     // end::get-aggregate-root[]
 
-    @PostMapping("/Books")
+    @PostMapping("/books")
     Book newBook(@RequestBody Book newBook) {
         return repository.save(newBook);
     }
 
     // Single item
 
-    @GetMapping("/Books/{id}")
+    @GetMapping("/books/{id}")
     Book one(@PathVariable Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }
 
-    @PutMapping("/Books/{id}")
+    @PutMapping("/books/{id}")
     Book replaceBook(@RequestBody Book newBook, @PathVariable Long id) {
 
         return repository.findById(id)
@@ -60,7 +60,7 @@ class BookController {
                 });
     }
 
-    @DeleteMapping("/Books/{id}")
+    @DeleteMapping("/books/{id}")
     void deleteBook(@PathVariable Long id) {
         repository.deleteById(id);
     }

@@ -15,17 +15,17 @@ class BookInventoryController {
         this.repository = repository;
     }
 
-    @GetMapping("/BookInventories")
+    @GetMapping("/book-inventories")
     List<BookInventory> all() {
         return repository.findAll();
     }
 
-    @PostMapping("/BookInventories")
+    @PostMapping("/book-inventories")
     BookInventory newBookInventory(@RequestBody BookInventory newBook) {
         return repository.save(newBook);
     }
 
-    @DeleteMapping("/BookInventories/{id}")
+    @DeleteMapping("/book-inventories/{id}")
     void deleteBookInventory(@PathVariable Long id) {
         repository.deleteById(id);
     }

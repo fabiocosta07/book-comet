@@ -1,0 +1,27 @@
+### GET request with a header
+GET http://localhost:8080/books
+Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "name": "atomic habits",
+  "authors": "james clear",
+  "publisher": "macmillian",
+  "yearOfPublication": 2000,
+  "summary": "good book"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "name": "crime and punishment",
+  "authors": "dostoievisk",
+  "publisher": "trinta e tres",
+  "yearOfPublication": 1800,
+  "summary": "Excelent book"
+}
