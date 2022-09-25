@@ -4,6 +4,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "book", uniqueConstraints = { @UniqueConstraint(name = "UniqueBooks", columnNames = { "name", "authors"}) })
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="format",
+        discriminatorType = DiscriminatorType.STRING)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
