@@ -51,7 +51,7 @@ POST http://localhost:8080/book-inventories
 Content-Type: application/json
 
 {
- "book_id": 5,
+ "bookId": 5,
  "quantity": 10
 }
 

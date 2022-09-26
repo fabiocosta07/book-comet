@@ -49,10 +49,13 @@ class BookController {
     Book replaceBook(@RequestBody Book newBook, @PathVariable Long id) {
 
         return repository.findById(id)
-                .map(Book -> {
-                    Book.setName(newBook.getName());
-                    Book.setAuthors(newBook.getAuthors());
-                    return repository.save(Book);
+                .map(book -> {
+                    book.setName(newBook.getName());
+                    book.setAuthors(newBook.getAuthors());
+                    book.setPublisher(newBook.getPublisher());
+                    book.setSummary(newBook.getSummary());
+                    book.setYearOfPublication(newBook.getYearOfPublication());
+                    return repository.save(book);
                 })
                 .orElseGet(() -> {
                     newBook.setId(id);

@@ -1,7 +1,10 @@
 package com.bookcomet.bookinventoryservice.controller;
 
+import com.bookcomet.bookinventoryservice.dto.BookInventoryDTO;
 import com.bookcomet.bookinventoryservice.model.BookInventory;
 import com.bookcomet.bookinventoryservice.repository.BookInventoryRepository;
+import com.bookcomet.bookinventoryservice.repository.BookRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +14,11 @@ class BookInventoryController {
 
     private final BookInventoryRepository repository;
 
-    BookInventoryController(BookInventoryRepository repository) {
+    private final BookRepository bookRepository;
+
+    BookInventoryController(BookInventoryRepository repository, BookRepository bookRepository) {
         this.repository = repository;
+        this.bookRepository = bookRepository;
     }
 
     @GetMapping("/book-inventories")
@@ -21,12 +27,19 @@ class BookInventoryController {
     }
 
     @PostMapping("/book-inventories")
-    BookInventory newBookInventory(@RequestBody BookInventory newBook) {
-        return repository.save(newBook);
+    BookInventory newBookInventory(@RequestBody BookInventoryDTO newBook) {
+        return repository.save(convertDTO(newBook));
     }
 
     @DeleteMapping("/book-inventories/{id}")
     void deleteBookInventory(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    private BookInventory convertDTO(BookInventoryDTO dto) {
+        final BookInventory bi = new BookInventory();
+        BeanUtils.copyProperties(dto, bi);
+        bi.setBook(bookRepository.findById(dto.getBookId()).get());
+        return bi;
     }
 }
