@@ -20,22 +20,18 @@ class BookController {
         this.repository = repository;
     }
 
-
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/books")
     List<Book> search(@RequestParam(required = false) String name, @RequestParam(required = false) String authors) {
         if (StringUtils.hasLength(name) && StringUtils.hasLength(authors)) {
-            return repository.findBooksByNameAndAuthors(name, authors);
+            return repository.findBooksByNameContainingAndAuthorsContaining(name, authors);
         } else if (StringUtils.hasLength(name)) {
-            return repository.findBooksByName(name);
+            return repository.findBooksByNameContaining(name);
         } else if (StringUtils.hasLength(authors)) {
-            return repository.findBooksByAuthors(authors);
+            return repository.findBooksByAuthorsContaining(authors);
         } else {
             return repository.findAll();
         }
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/books")
     @ResponseStatus(HttpStatus.CREATED)

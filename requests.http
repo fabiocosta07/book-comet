@@ -2,6 +2,18 @@
 GET http://localhost:8080/books
 Accept: application/json
 
+### GET request with a by name
+GET http://localhost:8080/books?name=atomic
+Accept: application/json
+
+### GET request with a by authors
+GET http://localhost:8080/books?authors=james
+Accept: application/json
+
+### GET request with a by name and authors
+GET http://localhost:8080/books?name=authors=james
+Accept: application/json
+
 ### Send POST request with book1
 POST http://localhost:8080/books
 Content-Type: application/json

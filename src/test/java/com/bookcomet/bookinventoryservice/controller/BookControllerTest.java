@@ -48,21 +48,21 @@ class BookControllerTests {
     public void getShouldReturnBooksByName() throws Exception {
         List testList = Arrays.asList(new Book("book1","author1", "pub1",2000, "summary1"));
         final String expectedContent = objectMapper.writeValueAsString(testList);
-        when(bookRepository.findBooksByName("book1")).thenReturn(testList);
+        when(bookRepository.findBooksByNameContaining("book1")).thenReturn(testList);
         this.mockMvc.perform(get("/books?name=book1")).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedContent));
-        verify(bookRepository).findBooksByName("book1");
+        verify(bookRepository).findBooksByNameContaining("book1");
     }
     @Test
     public void getShouldReturnBooksByAuthors() throws Exception {
         List testList = Arrays.asList(new Book("book1","author1", "pub1",2000, "summary1"));
         final String expectedContent = objectMapper.writeValueAsString(testList);
-        when(bookRepository.findBooksByAuthors("author1")).thenReturn(testList);
+        when(bookRepository.findBooksByAuthorsContaining("author1")).thenReturn(testList);
         this.mockMvc.perform(get("/books?authors=author1")).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedContent));
-        verify(bookRepository).findBooksByAuthors("author1");
+        verify(bookRepository).findBooksByAuthorsContaining("author1");
     }
     @Test
     public void postShouldCreateNewBook() throws Exception {
