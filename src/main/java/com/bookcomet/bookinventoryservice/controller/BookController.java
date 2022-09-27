@@ -5,6 +5,8 @@ import java.util.List;
 import com.bookcomet.bookinventoryservice.exception.BookNotFoundException;
 import com.bookcomet.bookinventoryservice.model.Book;
 import com.bookcomet.bookinventoryservice.repository.BookRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +34,8 @@ class BookController {
     // end::get-aggregate-root[]
 
     @PostMapping("/books")
-    Book newBook(@RequestBody Book newBook) {
-        return repository.save(newBook);
+    ResponseEntity<Book> newBook(@RequestBody Book newBook) {
+        return new ResponseEntity<>(repository.save(newBook), HttpStatus.CREATED);
     }
 
     // Single item
@@ -57,10 +59,7 @@ class BookController {
                     book.setYearOfPublication(newBook.getYearOfPublication());
                     return repository.save(book);
                 })
-                .orElseGet(() -> {
-                    newBook.setId(id);
-                    return repository.save(newBook);
-                });
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 
     @DeleteMapping("/books/{id}")

@@ -54,8 +54,28 @@ class BookControllerTests {
                         .characterEncoding("UTF-8")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)).andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(content().json(expectedContent));
+        verify(bookRepository).save(any());
+    }
+    @Test
+    public void putNotesShouldUpdateNote() throws Exception {
+        Book testBook = new Book();
+        String expectedContent = objectMapper.writeValueAsString(testBook);
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(testBook));
+        when(bookRepository.save(any())).thenReturn(testBook);
+        this.mockMvc.perform(put("/books/1")
+                        .content(expectedContent)
+                        .characterEncoding("UTF-8")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedContent));
         verify(bookRepository).save(any());
+    }
+    @Test
+    public void deleteNotesShouldDeleteNote() throws Exception {
+        this.mockMvc.perform(delete("/books/1"));
+        verify(bookRepository).deleteById(1L);
     }
 }
