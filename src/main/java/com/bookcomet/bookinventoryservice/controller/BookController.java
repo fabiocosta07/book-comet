@@ -8,14 +8,8 @@ import com.bookcomet.bookinventoryservice.model.*;
 import com.bookcomet.bookinventoryservice.repository.BookRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 class BookController {
@@ -30,21 +24,29 @@ class BookController {
     // Aggregate root
     // tag::get-aggregate-root[]
     @GetMapping("/books")
-    List<Book> all() {
-        return repository.findAll();
+    List<Book> search(@RequestParam(required = false) String name, @RequestParam(required = false) String authors) {
+        if (StringUtils.hasLength(name) && StringUtils.hasLength(authors)) {
+            return repository.findBooksByNameAndAuthors(name, authors);
+        } else if (StringUtils.hasLength(name)) {
+            return repository.findBooksByName(name);
+        } else if (StringUtils.hasLength(authors)) {
+            return repository.findBooksByAuthors(authors);
+        } else {
+            return repository.findAll();
+        }
     }
     // end::get-aggregate-root[]
 
     @PostMapping("/books")
-    ResponseEntity<Book> newBook(@RequestBody BookDTO newBook) {
-        return new ResponseEntity<>(repository.save(convertDTO(newBook)), HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    Book newBook(@RequestBody BookDTO newBook) {
+        return repository.save(convertDTO(newBook));
     }
 
     // Single item
 
     @GetMapping("/books/{id}")
     Book one(@PathVariable Long id) {
-
         return repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
     }

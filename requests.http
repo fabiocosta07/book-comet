@@ -23,11 +23,12 @@ Content-Type: application/json
   "authors": "dostoievisk",
   "publisher": "trinta e tres",
   "yearOfPublication": 1800,
-  "summary": "Excelent book"
+  "summary": "Excelent book",
+  "format": "PDF"
 }
 
 ### DELETE request with a header
-DELETE http://localhost:8080/books/1
+DELETE http://localhost:8080/books/14
 
 ### PUT request with a header
 PUT http://localhost:8080/books/2
@@ -51,9 +52,9 @@ POST http://localhost:8080/book-inventories
 Content-Type: application/json
 
 {
- "bookId": 5,
+ "bookId": 12,
  "quantity": 10
 }
 
 ### DELETE request with a book-inventories
-DELETE http://localhost:8080/book-inventories/6
+DELETE http://localhost:8080/book-inventories/14
