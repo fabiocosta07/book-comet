@@ -35,7 +35,7 @@ class BookControllerTests {
     private ObjectMapper objectMapper;
 
     @Test
-    public void getBooksShouldReturnBooks() throws Exception {
+    public void getShouldReturnBooks() throws Exception {
         List testList = Arrays.asList(new Book());
         final String expectedContent = objectMapper.writeValueAsString(testList);
         when(bookRepository.findAll()).thenReturn(testList);
@@ -45,7 +45,7 @@ class BookControllerTests {
         verify(bookRepository).findAll();
     }
     @Test
-    public void postBooksShouldCreateNewBook() throws Exception {
+    public void postShouldCreateNewBook() throws Exception {
         Book testBook = new Book();
         String expectedContent = objectMapper.writeValueAsString(testBook);
         when(bookRepository.save(any())).thenReturn(testBook);
@@ -59,7 +59,7 @@ class BookControllerTests {
         verify(bookRepository).save(any());
     }
     @Test
-    public void putNotesShouldUpdateNote() throws Exception {
+    public void putShouldUpdateBook() throws Exception {
         Book testBook = new Book();
         String expectedContent = objectMapper.writeValueAsString(testBook);
         when(bookRepository.findById(1L)).thenReturn(Optional.of(testBook));
@@ -74,7 +74,7 @@ class BookControllerTests {
         verify(bookRepository).save(any());
     }
     @Test
-    public void deleteNotesShouldDeleteNote() throws Exception {
+    public void deleteShouldDeleteBook() throws Exception {
         this.mockMvc.perform(delete("/books/1"));
         verify(bookRepository).deleteById(1L);
     }
