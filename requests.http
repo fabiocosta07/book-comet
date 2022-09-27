@@ -2,6 +2,10 @@
 GET http://localhost:8080/books
 Accept: application/json
 
+### GET request with a header
+GET http://localhost:8080/books/1
+Accept: application/json
+
 ### GET request with a by name
 GET http://localhost:8080/books?name=atomic
 Accept: application/json
@@ -11,7 +15,7 @@ GET http://localhost:8080/books?authors=james
 Accept: application/json
 
 ### GET request with a by name and authors
-GET http://localhost:8080/books?name=authors=james
+GET http://localhost:8080/books?name=atomic&authors=james
 Accept: application/json
 
 ### Send POST request with book1
@@ -27,6 +31,17 @@ Content-Type: application/json
 }
 
 ### Send POST request with book2
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "name": "atomic habits 2",
+  "authors": "james clear",
+  "publisher": "macmillian",
+  "yearOfPublication": 2000,
+  "summary": "good book"
+}
+### Send POST request with book3
 POST http://localhost:8080/books
 Content-Type: application/json
 
@@ -69,4 +84,4 @@ Content-Type: application/json
 }
 
 ### DELETE request with a book-inventories
-DELETE http://localhost:8080/book-inventories/14
+DELETE http://localhost:8080/book-inventories/13

@@ -1,6 +1,7 @@
 package com.bookcomet.bookinventoryservice.controller;
 
 import com.bookcomet.bookinventoryservice.dto.BookInventoryDTO;
+import com.bookcomet.bookinventoryservice.exception.BusinessValidationException;
 import com.bookcomet.bookinventoryservice.model.BookInventory;
 import com.bookcomet.bookinventoryservice.repository.BookInventoryRepository;
 import com.bookcomet.bookinventoryservice.repository.BookRepository;
@@ -28,6 +29,9 @@ class BookInventoryController {
 
     @PostMapping("/book-inventories")
     BookInventory newBookInventory(@RequestBody BookInventoryDTO newBook) {
+        if (newBook.getQuantity() < 0) {
+            throw new BusinessValidationException("Quantity cannot be negative");
+        }
         return repository.save(convertDTO(newBook));
     }
 
