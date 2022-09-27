@@ -8,6 +8,17 @@ import javax.persistence.*;
 @DiscriminatorColumn(name="format",
         discriminatorType = DiscriminatorType.STRING)
 public class Book {
+
+    public Book() {
+    }
+    public Book(String name, String authors, String publisher, Integer yearOfPublication, String summary) {
+        this.name = name;
+        this.authors = authors;
+        this.publisher = publisher;
+        this.yearOfPublication = yearOfPublication;
+        this.summary = summary;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
