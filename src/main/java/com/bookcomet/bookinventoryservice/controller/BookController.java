@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.bookcomet.bookinventoryservice.dto.BookDTO;
 import com.bookcomet.bookinventoryservice.exception.BookNotFoundException;
+import com.bookcomet.bookinventoryservice.exception.BusinessValidationException;
 import com.bookcomet.bookinventoryservice.model.*;
+import com.bookcomet.bookinventoryservice.repository.BookInventoryRepository;
 import com.bookcomet.bookinventoryservice.repository.BookRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 class BookController {
 
     private final BookRepository repository;
+    private final BookInventoryRepository bookInventoryRepository;
 
-    BookController(BookRepository repository) {
+    BookController(BookRepository repository, BookInventoryRepository bookInventoryRepository) {
         this.repository = repository;
+        this.bookInventoryRepository = bookInventoryRepository;
     }
 
     @GetMapping("/books")
@@ -64,7 +68,12 @@ class BookController {
 
     @DeleteMapping("/books/{id}")
     void deleteBook(@PathVariable Long id) {
-        repository.deleteById(id);
+        BookInventory bookInventory = bookInventoryRepository.findBookInventoryByBook_Id(id);
+        if (bookInventory == null || bookInventory.getQuantity() == 0  ) {
+            repository.deleteById(id);
+            return;
+        }
+        throw new BusinessValidationException("Cannot delete book with positive inventory quantity");
     }
     private Book convertDTO(BookDTO dto) {
         Book book = new Book();

@@ -1,6 +1,7 @@
 package com.bookcomet.bookinventoryservice.controller;
 
 import com.bookcomet.bookinventoryservice.model.Book;
+import com.bookcomet.bookinventoryservice.repository.BookInventoryRepository;
 import com.bookcomet.bookinventoryservice.repository.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ class BookControllerTests {
 
     @MockBean
     private BookRepository bookRepository;
+
+    @MockBean
+    private BookInventoryRepository bookInventoryRepository;
 
     @Autowired
     private ObjectMapper objectMapper;

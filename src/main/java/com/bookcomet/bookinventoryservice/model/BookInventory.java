@@ -14,6 +14,14 @@ public class BookInventory {
     private Book book;
     private Long quantity;
 
+    public BookInventory() {
+    }
+
+    public BookInventory(Book book, Long quantity) {
+        this.book = book;
+        this.quantity = quantity;
+    }
+
     public long getId() {
         return id;
     }
