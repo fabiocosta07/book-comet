@@ -1,6 +1,7 @@
 package com.bookcomet.bookinventoryservice.controller;
 
 import com.bookcomet.bookinventoryservice.model.Book;
+import com.bookcomet.bookinventoryservice.model.BookInventory;
 import com.bookcomet.bookinventoryservice.repository.BookInventoryRepository;
 import com.bookcomet.bookinventoryservice.repository.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -102,4 +102,18 @@ public class BookControllerTest {
         this.mockMvc.perform(delete("/books/1"));
         verify(bookRepository).deleteById(1L);
     }
+
+    @Test
+    public void deleteShouldDeleteBookZeroQuantity() throws Exception {
+        when(bookInventoryRepository.findBookInventoryByBook_Id(any())).thenReturn(new BookInventory(new Book(), 0L));
+        this.mockMvc.perform(delete("/books/1"));
+        verify(bookRepository).deleteById(1L);
+    }
+    @Test
+    public void deleteShouldNotDeleteBook() throws Exception {
+        when(bookInventoryRepository.findBookInventoryByBook_Id(any())).thenReturn(new BookInventory(new Book(), 10L));
+        this.mockMvc.perform(delete("/books/1"));
+        verify(bookRepository,never()).deleteById(1L);
+    }
+
 }
