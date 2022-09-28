@@ -83,6 +83,21 @@ public class BookControllerTest {
         verify(bookRepository).save(any());
     }
     @Test
+    public void postShouldNotCreateNewBook() throws Exception {
+        Book testBook = new Book();
+        String expectedContent = objectMapper.writeValueAsString(testBook);
+        when(bookRepository.findBooksByNameAndAuthors(any(),any())).thenReturn(testBook);
+        this.mockMvc.perform(post("/books")
+                        .content(expectedContent)
+                        .characterEncoding("UTF-8")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)).andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Book already exists"));
+        verify(bookRepository).findBooksByNameAndAuthors(any(),any());
+    }
+
+    @Test
     public void putShouldUpdateBook() throws Exception {
         Book testBook = new Book();
         String expectedContent = objectMapper.writeValueAsString(testBook);
@@ -112,7 +127,9 @@ public class BookControllerTest {
     @Test
     public void deleteShouldNotDeleteBook() throws Exception {
         when(bookInventoryRepository.findBookInventoryByBook_Id(any())).thenReturn(new BookInventory(new Book(), 10L));
-        this.mockMvc.perform(delete("/books/1"));
+        this.mockMvc.perform(delete("/books/1"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Cannot delete book with positive inventory quantity"));
         verify(bookRepository,never()).deleteById(1L);
     }
 

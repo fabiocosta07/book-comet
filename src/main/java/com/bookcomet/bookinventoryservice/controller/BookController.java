@@ -40,7 +40,10 @@ class BookController {
     @PostMapping("/books")
     @ResponseStatus(HttpStatus.CREATED)
     Book newBook(@RequestBody BookDTO newBook) {
-        return repository.save(convertDTO(newBook));
+        if (repository.findBooksByNameAndAuthors(newBook.getName(), newBook.getAuthors()) == null) {
+            return repository.save(convertDTO(newBook));
+        }
+        throw new BusinessValidationException("Book already exists");
     }
 
     // Single item

@@ -1,6 +1,8 @@
 package com.bookcomet.bookinventoryservice.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.bookcomet.bookinventoryservice.model.Book;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @DataJpaTest
@@ -58,5 +61,13 @@ public class BookRepositoryTest {
         List<Book> books = bookRepository.findBooksByNameContainingAndAuthorsContaining("book1","author1");
         assertThat(books).hasSize(1);
     }
-
+    @Test
+    void throwsErrorWhenAddBooksSameNameAndAuthors() throws Exception {
+        entityManager.clear();
+        assertThatThrownBy(() -> {
+            bookRepository.save(new Book("book1","author1", "pub1",2000, "summary1"));
+            bookRepository.save(new Book("book1","author1", "pub1",2000, "summary1"));
+            entityManager.flush();
+        }, "Test constraint violation").isInstanceOf(PersistenceException.class).hasMessageContaining("org.hibernate.exception.ConstraintViolationException:");
+    }
 }
