@@ -1,6 +1,7 @@
 package com.bookcomet.bookinventoryservice.controller;
 
 import com.bookcomet.bookinventoryservice.dto.BookInventoryDTO;
+import com.bookcomet.bookinventoryservice.exception.BookNotFoundException;
 import com.bookcomet.bookinventoryservice.exception.BusinessValidationException;
 import com.bookcomet.bookinventoryservice.model.BookInventory;
 import com.bookcomet.bookinventoryservice.repository.BookInventoryRepository;
@@ -43,7 +44,7 @@ class BookInventoryController {
     private BookInventory convertDTO(BookInventoryDTO dto) {
         final BookInventory bi = new BookInventory();
         BeanUtils.copyProperties(dto, bi);
-        bi.setBook(bookRepository.findById(dto.getBookId()).get());
+        bi.setBook(bookRepository.findById(dto.getBookId()).orElseThrow(() -> new BookNotFoundException(dto.getBookId())));
         return bi;
     }
 }
