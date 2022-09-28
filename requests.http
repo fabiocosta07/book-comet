@@ -1,26 +1,33 @@
+
 ### GET request with a header
 GET http://localhost:8080/books
 Accept: application/json
+Authorization: Basic admin 123
 
 ### GET request with a header
 GET http://localhost:8080/books/1
 Accept: application/json
+Authorization: Basic admin 123
 
 ### GET request with a by name
 GET http://localhost:8080/books?name=atomic
 Accept: application/json
+Authorization: Basic admin 123
 
 ### GET request with a by authors
 GET http://localhost:8080/books?authors=james
 Accept: application/json
+Authorization: Basic admin 123
 
 ### GET request with a by name and authors
 GET http://localhost:8080/books?name=atomic&authors=james
 Accept: application/json
+Authorization: Basic admin 123
 
 ### Send POST request with book1
 POST http://localhost:8080/books
 Content-Type: application/json
+Authorization: Basic admin 123
 
 {
   "name": "atomic habits",
@@ -33,6 +40,7 @@ Content-Type: application/json
 ### Send POST request with book2
 POST http://localhost:8080/books
 Content-Type: application/json
+Authorization: Basic admin 123
 
 {
   "name": "atomic habits 2",
@@ -44,6 +52,7 @@ Content-Type: application/json
 ### Send POST request with book3
 POST http://localhost:8080/books
 Content-Type: application/json
+Authorization: Basic admin 123
 
 {
   "name": "crime and punishment",
@@ -56,10 +65,12 @@ Content-Type: application/json
 
 ### DELETE request with a header
 DELETE http://localhost:8080/books/14
+Authorization: Basic admin 123
 
 ### PUT request with a header
 PUT http://localhost:8080/books/2
 Content-Type: application/json
+Authorization: Basic admin 123
 
 {
   "name": "crime and punishment updated",
@@ -73,10 +84,12 @@ Content-Type: application/json
 ### GET request book-inventories
 GET http://localhost:8080/book-inventories
 Accept: application/json
+Authorization: Basic admin 123
 
 ### Send POST request with boo1Inventory
 POST http://localhost:8080/book-inventories
 Content-Type: application/json
+Authorization: Basic admin 123
 
 {
  "bookId": 12,
@@ -85,3 +98,4 @@ Content-Type: application/json
 
 ### DELETE request with a book-inventories
 DELETE http://localhost:8080/book-inventories/13
+Authorization: Basic admin 123
