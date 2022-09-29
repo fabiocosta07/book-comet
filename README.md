@@ -25,6 +25,10 @@ postman collection file:
 
 ./book-comet-collection.postman_collection.json
 
+H2 db file will be created at:
+
+~/test.db
+
 
 
 
