@@ -38,6 +38,10 @@ public class Book {
     @Column(name="summary")
     private String summary;
 
+    @Column(name="format", updatable=false, insertable=false)
+    private String format;
+
+
     public long getId() {
         return id;
     }
@@ -84,5 +88,8 @@ public class Book {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+    public String getFormat() {
+        return format;
     }
 }
