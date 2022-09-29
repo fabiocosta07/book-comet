@@ -2,7 +2,7 @@
 ### GET request with a header
 GET http://localhost:8080/books
 Accept: application/json
-#Authorization: Basic admin 123
+Authorization: Basic admin 123
 
 ### GET request with a header
 GET http://localhost:8080/books/1
