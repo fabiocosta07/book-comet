@@ -21,6 +21,10 @@ Basic authentication
 
 user: admin / password: 123
 
+postman collection file:
+
+./book-comet-collection.postman_collection.json
+
 
 
 
